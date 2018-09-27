@@ -1,8 +1,8 @@
-import React from 'react'
+import React from 'react';
 
 class AnecdoteList extends React.Component {
   render() {
-    const anecdotes = this.props.store.getState()
+    const anecdotes = this.props.store.getState();
     return (
       <div>
         <h2>Anecdotes</h2>
@@ -13,7 +13,7 @@ class AnecdoteList extends React.Component {
             </div>
             <div>
               has {anecdote.votes}
-              <button onClick={() => 
+              <button onClick={() =>
                 this.props.store.dispatch({ type: 'VOTE', id: anecdote.id })
               }>
                 vote
@@ -22,8 +22,8 @@ class AnecdoteList extends React.Component {
           </div>
         )}
       </div>
-    )
+    );
   }
 }
 
-export default AnecdoteList
+export default AnecdoteList;

@@ -5,11 +5,19 @@ import AnecdoteList from './components/AnecdoteList';
 import { connect } from 'react-redux';
 import { initAnecdotes } from './reducers/anecdoteReducer';
 import anecdoteService from './services/anecdotes';
+import { showNotification } from './reducers/notificationReducer';
+
 
 class App extends React.Component {
   componentDidMount = async () => {
-    const response = await anecdoteService.getAll();
-    this.props.initAnecdotes(response);
+    try {
+      const response = await anecdoteService.getAll();
+      this.props.initAnecdotes(response);
+    } catch (error) {
+      if (error.message === 'Network Error') {
+        this.props.showNotification('Please check that your server is on.');
+      }
+    }
   }
   render() {
     return (
@@ -24,7 +32,8 @@ class App extends React.Component {
 }
 
 const mapDispatchToProps = {
-  initAnecdotes: initAnecdotes
+  initAnecdotes: initAnecdotes,
+  showNotification: showNotification
 };
 const ConnectedApp = connect(null, mapDispatchToProps)(App);
 export default ConnectedApp;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { voteAnAnecdote } from '../reducers/anecdoteReducer';
-import { showNotification, removeNotification } from '../reducers/notificationReducer';
+import { displayNotification } from '../reducers/notificationReducer';
 import Filter from './Filter';
 import { connect } from 'react-redux';
 
@@ -9,8 +9,7 @@ class AnecdoteList extends React.Component {
     const content = { ...anecdote, votes: anecdote.votes+1 };
     this.props.voteAnAnecdote(content);
     const notification = 'You voted for: \'' + anecdote.content + '\'';
-    this.props.showNotification(notification);
-    setTimeout(() => { this.props.removeNotification(); }, 5000);
+    this.props.displayNotification(notification, 5000);
   }
   render() {
     return (
@@ -51,8 +50,7 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = {
   voteAnAnecdote: voteAnAnecdote,
-  showNotification: showNotification,
-  removeNotification: removeNotification
+  displayNotification: displayNotification
 };
 const connectedAnecdoteList = connect(
   mapStateToProps,

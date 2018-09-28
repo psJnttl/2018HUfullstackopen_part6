@@ -23,4 +23,13 @@ export const showNotification = (notification) => {
   };
 };
 
+export const displayNotification = ( text, duration) => {
+  return (dispatch) => {
+    dispatch(showNotification(text));
+    if (duration >= 0) {
+      setTimeout( () => { dispatch(removeNotification()); }, duration );
+    }
+  };
+};
+
 export default notificationReducer;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { createNewAnecdote } from '../reducers/anecdoteReducer';
-import { showNotification, removeNotification } from '../reducers/notificationReducer';
+import { displayNotification } from '../reducers/notificationReducer';
 import { connect } from 'react-redux';
 
 class AnecdoteForm extends React.Component {
@@ -10,8 +10,7 @@ class AnecdoteForm extends React.Component {
     e.target.anecdote.value = '';
     this.props.createNewAnecdote(content);
     const notification = 'You added: \'' + content + '\'';
-    this.props.showNotification(notification);
-    setTimeout( () => { this.props.removeNotification(); }, 5000 );
+    this.props.displayNotification(notification, 5000);
   }
   render() {
     return (
@@ -28,8 +27,7 @@ class AnecdoteForm extends React.Component {
 
 const mapDispatchToProps = {
   createNewAnecdote: createNewAnecdote,
-  showNotification: showNotification,
-  removeNotification: removeNotification
+  displayNotification: displayNotification
 };
 const ConnectedAnecdoteForm = connect(null, mapDispatchToProps)(AnecdoteForm);
 export default ConnectedAnecdoteForm;

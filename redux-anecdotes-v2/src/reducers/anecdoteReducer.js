@@ -1,5 +1,5 @@
 import anecdoteService from '../services/anecdotes';
-import { showNotification } from '../reducers/notificationReducer';
+import { displayNotification } from '../reducers/notificationReducer';
 
 const reducer = (store = [], action) => {
   if (action.type==='VOTE') {
@@ -47,7 +47,7 @@ export const loadAllAnecdotes = () => {
       } );
     } catch (error) {
       if (error.message === 'Network Error') {
-        dispatch(showNotification('Please check server connection.'));
+        dispatch(displayNotification('Please check server connection.', -1));
       }
       else {
         throw error;
@@ -63,7 +63,7 @@ export const createNewAnecdote = (text) => {
       dispatch(createAnecdote(response));
     } catch (error) {
       if (error.message === 'Network Error') {
-        dispatch(showNotification('Please check server connection.'));
+        dispatch(displayNotification('Please check server connection.', -1));
       }
       else {
         throw error;
@@ -79,7 +79,7 @@ export const voteAnAnecdote = (anecdote) => {
       dispatch(voteAnecdote(voted));
     } catch (error) {
       if (error.message === 'Network Error') {
-        dispatch(showNotification('Please check server connection.'));
+        dispatch(displayNotification('Please check server connection.', -1));
       }
       else {
         throw error;

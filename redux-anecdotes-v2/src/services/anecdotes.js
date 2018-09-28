@@ -12,4 +12,10 @@ const create = async(text) => {
   return response.data;
 };
 
-export default { getAll, create };
+const modify = async(anecdote) => {
+  const modUrl = url + '/' + anecdote.id;
+  const response = await axios.put(modUrl, anecdote);
+  return response.data;
+};
+
+export default { getAll, create, modify };

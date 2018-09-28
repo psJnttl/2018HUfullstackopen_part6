@@ -1,9 +1,8 @@
 
 const reducer = (store = [], action) => {
   if (action.type==='VOTE') {
-    const old = store.filter(a => a.id !==action.id);
-    const voted = store.find(a => a.id === action.id);
-    return [...old, { ...voted, votes: voted.votes+1 } ];
+    const rest = store.filter(a => a.id !== action.content.id);
+    return [...rest, action.content];
   }
   else if (action.type === 'CREATE') {
     return [...store, action.content];
@@ -22,10 +21,10 @@ export const createAnecdote = (text) => {
   };
 };
 
-export const voteAnecdote = (id) => {
+export const voteAnecdote = (content) => {
   return {
     type: 'VOTE',
-    id: id
+    content: content
   };
 };
 

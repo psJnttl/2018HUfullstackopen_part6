@@ -1,3 +1,5 @@
+import anecdoteService from '../services/anecdotes';
+import { showNotification } from '../reducers/notificationReducer';
 
 const reducer = (store = [], action) => {
   if (action.type==='VOTE') {
@@ -32,6 +34,23 @@ export const initAnecdotes = (data) => {
   return {
     type: 'INIT_STORE',
     data: data
+  };
+};
+
+export const loadAllAnecdotes = () => {
+  return async (dispatch) => {
+    try {
+      const response = await anecdoteService.getAll();
+      dispatch( {
+        type: 'INIT_STORE',
+        data: response
+      } );
+    } catch (error) {
+      if (error.message === 'Network Error') {
+        console.log('Please check server connection.');
+        dispatch(showNotification('Please check server connection.'));
+      }
+    }
   };
 };
 

@@ -3,21 +3,11 @@ import Notification from './components/Notification';
 import AnecdoteForm from './components/AnecdoteForm';
 import AnecdoteList from './components/AnecdoteList';
 import { connect } from 'react-redux';
-import { initAnecdotes } from './reducers/anecdoteReducer';
-import anecdoteService from './services/anecdotes';
-import { showNotification } from './reducers/notificationReducer';
-
+import { loadAllAnecdotes } from './reducers/anecdoteReducer';
 
 class App extends React.Component {
   componentDidMount = async () => {
-    try {
-      const response = await anecdoteService.getAll();
-      this.props.initAnecdotes(response);
-    } catch (error) {
-      if (error.message === 'Network Error') {
-        this.props.showNotification('Please check that your server is on.');
-      }
-    }
+    this.props.loadAllAnecdotes();
   }
   render() {
     return (
@@ -32,8 +22,7 @@ class App extends React.Component {
 }
 
 const mapDispatchToProps = {
-  initAnecdotes: initAnecdotes,
-  showNotification: showNotification
+  loadAllAnecdotes: loadAllAnecdotes
 };
 const ConnectedApp = connect(null, mapDispatchToProps)(App);
 export default ConnectedApp;

@@ -47,8 +47,42 @@ export const loadAllAnecdotes = () => {
       } );
     } catch (error) {
       if (error.message === 'Network Error') {
-        console.log('Please check server connection.');
         dispatch(showNotification('Please check server connection.'));
+      }
+      else {
+        throw error;
+      }
+    }
+  };
+};
+
+export const createNewAnecdote = (text) => {
+  return async (dispatch) => {
+    try {
+      const response = await anecdoteService.create(text);
+      dispatch(createAnecdote(response));
+    } catch (error) {
+      if (error.message === 'Network Error') {
+        dispatch(showNotification('Please check server connection.'));
+      }
+      else {
+        throw error;
+      }
+    }
+  };
+};
+
+export const voteAnAnecdote = (anecdote) => {
+  return async (dispatch) => {
+    try {
+      const voted = await anecdoteService.modify(anecdote);
+      dispatch(voteAnecdote(voted));
+    } catch (error) {
+      if (error.message === 'Network Error') {
+        dispatch(showNotification('Please check server connection.'));
+      }
+      else {
+        throw error;
       }
     }
   };

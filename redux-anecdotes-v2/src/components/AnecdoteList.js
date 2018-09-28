@@ -1,15 +1,13 @@
 import React from 'react';
-import { voteAnecdote } from '../reducers/anecdoteReducer';
+import { voteAnAnecdote } from '../reducers/anecdoteReducer';
 import { showNotification, removeNotification } from '../reducers/notificationReducer';
 import Filter from './Filter';
 import { connect } from 'react-redux';
-import anecdoteService from '../services/anecdotes';
 
 class AnecdoteList extends React.Component {
   handleVote = async (anecdote) => {
     const content = { ...anecdote, votes: anecdote.votes+1 };
-    const votedAnecdote = await anecdoteService.modify(content);
-    this.props.voteAnecdote(votedAnecdote);
+    this.props.voteAnAnecdote(content);
     const notification = 'You voted for: \'' + anecdote.content + '\'';
     this.props.showNotification(notification);
     setTimeout(() => { this.props.removeNotification(); }, 5000);
@@ -52,7 +50,7 @@ const mapStateToProps = (state) => {
   };
 };
 const mapDispatchToProps = {
-  voteAnecdote: voteAnecdote,
+  voteAnAnecdote: voteAnAnecdote,
   showNotification: showNotification,
   removeNotification: removeNotification
 };

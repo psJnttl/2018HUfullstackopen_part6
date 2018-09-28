@@ -17,8 +17,8 @@ class Notification extends React.Component {
   }
 }
 
-const mapDispatchToProps = (state) => {
+const mapStateToProps = (state) => {
   return { notification: state.notification };
 };
-const ConnectedNotification = connect(mapDispatchToProps)(Notification);
+const ConnectedNotification = connect(mapStateToProps)(Notification);
 export default ConnectedNotification;

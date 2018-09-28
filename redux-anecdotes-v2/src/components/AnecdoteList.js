@@ -12,16 +12,11 @@ class AnecdoteList extends React.Component {
     setTimeout(() => { this.props.removeNotification(); }, 5000);
   }
   render() {
-    const { anecdotes, filter } = this.props;
-    const filteredAnecdotes = anecdotes.filter( (a) => {
-      let index = a.content.toLowerCase().indexOf(filter.toLowerCase());
-      return -1 === index ? false : true;
-    });
     return (
       <div>
         <h2>Anecdotes</h2>
         <Filter  />
-        {filteredAnecdotes.sort((a, b) => b.votes - a.votes).map(anecdote =>
+        {this.props.anecdotesToShow.map(anecdote =>
           <div key={anecdote.id}>
             <div>
               {anecdote.content}
@@ -39,12 +34,20 @@ class AnecdoteList extends React.Component {
   }
 }
 
+const filterAndSortAnecdotes = (anecdotes, filter) => {
+  const filteredAnecdotes = anecdotes.filter( (a) => {
+    let index = a.content.toLowerCase().indexOf(filter.toLowerCase());
+    return -1 === index ? false : true;
+  });
+  const sortedAnecdotes = filteredAnecdotes.sort((a, b) => b.votes - a.votes);
+  return sortedAnecdotes;
+};
+
 const mapStateToProps = (state) => {
   return {
-    anecdotes: state.anecdotes,
-    filter: state.filter
+    anecdotesToShow: filterAndSortAnecdotes(state.anecdotes, state.filter)
   };
-}
+};
 const mapDispatchToProps = {
   voteAnecdote: voteAnecdote,
   showNotification: showNotification,

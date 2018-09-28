@@ -1,5 +1,6 @@
 import React from 'react';
 import { setFilter, resetFilter } from '../reducers/filterReducer';
+import { connect } from 'react-redux';
 
 class Filter extends React.Component {
   constructor(props) {
@@ -10,11 +11,11 @@ class Filter extends React.Component {
   }
   handleChange = (event) => {
     const value = event.target.value;
-    this.props.store.dispatch(setFilter(value));
+    this.props.setFilter(value);
     this.setState({ filterInput: value });
   }
   handleClear = () => {
-    this.props.store.dispatch(resetFilter());
+    this.props.resetFilter();
     this.setState({ filterInput: '' });
   }
   render() {
@@ -38,4 +39,9 @@ class Filter extends React.Component {
   }
 }
 
-export default Filter;
+const mapDispatchToProps = {
+  setFilter: setFilter,
+  resetFilter: resetFilter
+};
+const ConnectedFilter = connect(null, mapDispatchToProps)(Filter);
+export default ConnectedFilter;

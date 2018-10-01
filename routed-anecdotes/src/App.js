@@ -1,5 +1,5 @@
-import React from 'react'
-import { BrowserRouter, Route, Link } from 'react-router-dom'
+import React from 'react';
+import { BrowserRouter, Route, Link } from 'react-router-dom';
 
 
 const AnecdoteList = ({ anecdotes }) => (
@@ -9,7 +9,7 @@ const AnecdoteList = ({ anecdotes }) => (
       {anecdotes.map(anecdote => <li key={anecdote.id} >{anecdote.content}</li>)}
     </ul>
   </div>
-)
+);
 
 const About = () => (
   <div>
@@ -19,11 +19,11 @@ const About = () => (
     <em>An anecdote is a brief, revealing account of an individual person or an incident.
       Occasionally humorous, anecdotes differ from jokes because their primary purpose is not simply to provoke laughter but to reveal a truth more general than the brief tale itself,
       such as to characterize a person by delineating a specific quirk or trait, to communicate an abstract idea about a person, place, or thing through the concrete details of a short narrative.
-    An anecdote is "a story with a point."</em>
+    An anecdote is &quot;a story with a point.&quot;</em>
 
     <p>Software engineering is full of excellent anecdotes, at this app you can find the best and add more.</p>
   </div>
-)
+);
 
 const Footer = () => (
   <div>
@@ -31,31 +31,31 @@ const Footer = () => (
 
     See <a href='https://github.com/mluukkai/routed-anecdotes'>https://github.com/mluukkai/routed-anecdotes</a> for the source code.
   </div>
-)
+);
 
 class CreateNew extends React.Component {
   constructor() {
-    super()
+    super();
     this.state = {
       content: '',
       author: '',
       info: ''
-    }
+    };
   }
 
   handleChange = (e) => {
-    console.log(e.target.name, e.target.value)
-    this.setState({ [e.target.name]: e.target.value })
+    console.log(e.target.name, e.target.value);
+    this.setState({ [e.target.name]: e.target.value });
   }
 
   handleSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     this.props.addNew({
       content: this.state.content,
       author: this.state.author,
       info: this.state.info,
       votes: 0
-    })
+    });
   }
 
   render() {
@@ -78,14 +78,14 @@ class CreateNew extends React.Component {
           <button>create</button>
         </form>
       </div>
-    )
+    );
 
   }
 }
 
 class App extends React.Component {
   constructor() {
-    super()
+    super();
 
     this.state = {
       anecdotes: [
@@ -105,28 +105,28 @@ class App extends React.Component {
         }
       ],
       notification: ''
-    }
+    };
   }
 
   addNew = (anecdote) => {
-    anecdote.id = (Math.random() * 10000).toFixed(0)
-    this.setState({ anecdotes: this.state.anecdotes.concat(anecdote) })
+    anecdote.id = (Math.random() * 10000).toFixed(0);
+    this.setState({ anecdotes: this.state.anecdotes.concat(anecdote) });
   }
 
   anecdoteById = (id) =>
-    this.state.anecdotes.find(a => a.id === id)
+    this.state.anecdotes.find(a => a.id === id);
 
   vote = (id) => {
-    const anecdote = this.anecdoteById(id)
+    const anecdote = this.anecdoteById(id);
 
     const voted = {
       ...anecdote,
       votes: anecdote.votes + 1
-    }
+    };
 
-    const anecdotes = this.state.anecdotes.map(a => a.id === id ? voted : a)
+    const anecdotes = this.state.anecdotes.map(a => a.id === id ? voted : a);
 
-    this.setState({ anecdotes })
+    this.setState({ anecdotes });
   }
 
   render() {

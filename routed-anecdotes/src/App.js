@@ -98,11 +98,20 @@ class CreateNew extends React.Component {
 
   }
 }
-
+const notificationStyle = {
+  color: '#228822',
+  border: '2px solid #228822',
+  borderRadius: 6,
+  padding: 6,
+  margin: '8px 4px 4px 4px'
+};
 const Notification = ({ note }) => {
-  return (
-    <div>{note}</div>
-  );
+  if (note) {
+    return (
+      <div style={notificationStyle}>{note}</div>
+    );
+  }
+  else return null;
 };
 
 class App extends React.Component {

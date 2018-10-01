@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Route, Link, NavLink } from 'react-router-dom';
 
 
 const AnecdoteList = ({ anecdotes }) => (
@@ -98,6 +98,7 @@ class CreateNew extends React.Component {
 
   }
 }
+
 const notificationStyle = {
   color: '#228822',
   border: '2px solid #228822',
@@ -105,6 +106,7 @@ const notificationStyle = {
   padding: 6,
   margin: '8px 4px 4px 4px'
 };
+
 const Notification = ({ note }) => {
   if (note) {
     return (
@@ -112,6 +114,20 @@ const Notification = ({ note }) => {
     );
   }
   else return null;
+};
+
+const activeNavStyle = {
+  fontWeight: 'bold',
+  background: '#d2d2d2',
+  textDecoration: 'none',
+  borderRadius: 6
+};
+
+const navStyle = {
+  background: '#e8e8e8',
+  textDecoration: 'none',
+  padding: 4,
+  borderRadius: 6
 };
 
 class App extends React.Component {
@@ -170,10 +186,10 @@ class App extends React.Component {
         <h1>Software anecdotes</h1>
         <BrowserRouter>
           <div>
-            <div>
-              <Link to='/' >anecdotes</Link> &nbsp;
-              <Link to='/create'>create new</Link> &nbsp;
-              <Link to='/about'>about</Link>
+            <div style={navStyle}>
+              <NavLink exact to='/' activeStyle={activeNavStyle} style={navStyle}>anecdotes</NavLink> &nbsp;
+              <NavLink exact to='/create' activeStyle={activeNavStyle} style={navStyle}>create new</NavLink> &nbsp;
+              <NavLink exact to='/about' activeStyle={activeNavStyle} style={navStyle}>about</NavLink>
             </div>
             <Notification note={this.state.notification}/>
             <Route exact path='/' render={() => <AnecdoteList anecdotes={this.state.anecdotes} /> } />

@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Route, Link, NavLink } from 'react-router-dom';
-import { Container, Table } from 'semantic-ui-react';
+import { Container, Grid, Image, Table } from 'semantic-ui-react';
 
 const AnecdoteList = ({ anecdotes }) => (
   <div>
@@ -31,17 +31,24 @@ const Anecdote = ({ anecdote }) => {
 };
 
 const About = () => (
-  <div>
-    <h2>About anecdote app</h2>
-    <p>According to Wikipedia:</p>
+  <Grid  columns={2} padded='vertically'>
+    <Grid.Row>
+      <Grid.Column width={10}>
+        <h2>About anecdote app</h2>
+        <p>According to Wikipedia:</p>
 
-    <em>An anecdote is a brief, revealing account of an individual person or an incident.
-      Occasionally humorous, anecdotes differ from jokes because their primary purpose is not simply to provoke laughter but to reveal a truth more general than the brief tale itself,
-      such as to characterize a person by delineating a specific quirk or trait, to communicate an abstract idea about a person, place, or thing through the concrete details of a short narrative.
-    An anecdote is &quot;a story with a point.&quot;</em>
+        <em>An anecdote is a brief, revealing account of an individual person or an incident.
+          Occasionally humorous, anecdotes differ from jokes because their primary purpose is not simply to provoke laughter but to reveal a truth more general than the brief tale itself,
+          such as to characterize a person by delineating a specific quirk or trait, to communicate an abstract idea about a person, place, or thing through the concrete details of a short narrative.
+        An anecdote is &quot;a story with a point.&quot;</em>
 
-    <p>Software engineering is full of excellent anecdotes, at this app you can find the best and add more.</p>
-  </div>
+        <p>Software engineering is full of excellent anecdotes, at this app you can find the best and add more.</p>
+      </Grid.Column>
+      <Grid.Column width={5} verticalAlign='middle'>
+        <Image size='small' title='Frederick P. Brooks, Jr.' src='http://sysrun.haifa.il.ibm.com/ibm/history/exhibits/builders/images/5406FXB.jpg' />
+      </Grid.Column>
+    </Grid.Row>
+  </Grid>
 );
 
 const Footer = () => (

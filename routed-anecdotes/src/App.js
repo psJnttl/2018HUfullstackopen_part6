@@ -1,6 +1,6 @@
 import React from 'react';
-import { BrowserRouter, Route, Link, NavLink } from 'react-router-dom';
-import { Container, Grid, Image, Table } from 'semantic-ui-react';
+import { BrowserRouter, Route, Link } from 'react-router-dom';
+import { Button, Container, Form, Grid, Image, Menu, Message, Table } from 'semantic-ui-react';
 
 const AnecdoteList = ({ anecdotes }) => (
   <div>
@@ -20,13 +20,17 @@ const AnecdoteList = ({ anecdotes }) => (
 
 const Anecdote = ({ anecdote }) => {
   return (
-    <div>
-      <div>
+    <Grid container divided='vertically' padded='vertically'>
+      <Grid.Row>
         <h3>{anecdote.content} by {anecdote.author}</h3>
-        has {anecdote.votes} votes<br/>
+      </Grid.Row>
+      <Grid.Row>
+        has {anecdote.votes} votes
+      </Grid.Row>
+      <Grid.Row>
         for more information see: <a href={anecdote.info}>{anecdote.info}</a>
-      </div>
-    </div>
+      </Grid.Row>
+    </Grid>
   );
 };
 
@@ -53,6 +57,7 @@ const About = () => (
 
 const Footer = () => (
   <div>
+    <hr />
     Anecdote app for <a href='https://courses.helsinki.fi/fi/TKT21009/121540749'>Full Stack -sovelluskehitys</a>.
 
     See <a href='https://github.com/mluukkai/routed-anecdotes'>https://github.com/mluukkai/routed-anecdotes</a> for the source code.
@@ -70,7 +75,6 @@ class CreateNew extends React.Component {
   }
 
   handleChange = (e) => {
-    console.log(e.target.name, e.target.value);
     this.setState({ [e.target.name]: e.target.value });
   }
 
@@ -89,56 +93,34 @@ class CreateNew extends React.Component {
     return(
       <div>
         <h2>create a new anecdote</h2>
-        <form onSubmit={this.handleSubmit}>
-          <div>
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Field>
             content
             <input name='content' value={this.state.content} onChange={this.handleChange} />
-          </div>
-          <div>
+          </Form.Field>
+          <Form.Field>
             author
             <input name='author' value={this.state.author} onChange={this.handleChange} />
-          </div>
-          <div>
+          </Form.Field>
+          <Form.Field>
             url for more info
             <input name='info' value={this.state.info} onChange={this.handleChange} />
-          </div>
-          <button>create</button>
-        </form>
+          </Form.Field>
+          <Button positive>create</Button>
+        </Form>
       </div>
     );
 
   }
 }
 
-const notificationStyle = {
-  color: '#228822',
-  border: '2px solid #228822',
-  borderRadius: 6,
-  padding: 6,
-  margin: '8px 4px 4px 4px'
-};
-
 const Notification = ({ note }) => {
   if (note) {
     return (
-      <div style={notificationStyle}>{note}</div>
+      <Message success >{note}</Message>
     );
   }
   else return null;
-};
-
-const activeNavStyle = {
-  fontWeight: 'bold',
-  background: '#d2d2d2',
-  textDecoration: 'none',
-  borderRadius: 6
-};
-
-const navStyle = {
-  background: '#e8e8e8',
-  textDecoration: 'none',
-  padding: 4,
-  borderRadius: 6
 };
 
 class App extends React.Component {
@@ -162,7 +144,8 @@ class App extends React.Component {
           id: '2'
         }
       ],
-      notification: ''
+      notifon: '',
+      activeNavi: 'anecdotes'
     };
   }
 
@@ -197,11 +180,17 @@ class App extends React.Component {
         <h1>Software anecdotes</h1>
         <BrowserRouter>
           <div>
-            <div style={navStyle}>
-              <NavLink exact to='/' activeStyle={activeNavStyle} style={navStyle}>anecdotes</NavLink> &nbsp;
-              <NavLink exact to='/create' activeStyle={activeNavStyle} style={navStyle}>create new</NavLink> &nbsp;
-              <NavLink exact to='/about' activeStyle={activeNavStyle} style={navStyle}>about</NavLink>
-            </div>
+            <Menu >
+              <Menu.Item link>
+                <Link to='/' >anecdotes</Link>
+              </Menu.Item>
+              <Menu.Item link>
+                <Link to='/create' >create new</Link>
+              </Menu.Item>
+              <Menu.Item link>
+                <Link to='/about' >about</Link>
+              </Menu.Item>
+            </Menu>
             <Notification note={this.state.notification}/>
             <Route exact path='/' render={() => <AnecdoteList anecdotes={this.state.anecdotes} /> } />
             <Route path='/create' render={({ history }) => <CreateNew addNew={this.addNew} history={history} /> } />
